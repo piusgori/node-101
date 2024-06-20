@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const mainRouter = require('./routes');
 
 dotenv.config();
 
@@ -16,15 +17,9 @@ app.use((req, res, next) => {
     next();
 })
 
-app.get('/', function (req, res) {
-    res.status(200).json({ message: 'Hello' })
-})
-
-app.get('/one', function (req, res) {
-    res.send('Onessss')
-})
-
 const mongoUrl = process.env.MONGO_URL;
+
+app.use(mainRouter)
 
 app.use((req, res) => {
     res.status(404).json({ message: 'Page not found' })
